@@ -47,11 +47,19 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
-                                <div id="dropdownMenu" class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
-                                    <a href="profil-akun.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Profil Saya</a>
-                                    <a href="pengaturan.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Pengaturan</a>
-                                    <hr class="my-1 border-gray-100">
-                                    <a href="logout.php" class="block px-4 py-2 text-sm text-red-600 font-bold hover:bg-red-50">Keluar (Logout)</a>
+                                <div id="dropdownMenu" class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50 border border-gray-100">
+                                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                                        Pengaturan Profil
+                                    </a>
+                                    <div class="border-t border-gray-100 my-1"></div>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); this.closest('form').submit();"
+                                            class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                            Keluar (Logout)
+                                        </a>
+                                    </form>
                                 </div>
                             </div>
                         <?php else: ?>
