@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Infografis | UMKM Desa Sirnagalih</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Times New Roman', Times, serif; }
         /* Hilangkan efek hover lama agar tidak bentrok dengan klik */
@@ -33,8 +34,15 @@
                     <a href="berita" class="text-gray-600 hover:text-blue-600 transition font-medium">Berita</a>
                     <a href="data-umkm" class="text-gray-600 hover:text-blue-600 transition font-medium">Data UMKM</a>
 
-                    <div class="relative inline-block text-left">
-                        <?php if (isset($_SESSION['login'])): ?>
+                    <div class="hidden md:flex items-center space-x-4">
+
+                        @guest
+                            <a href="{{ route('login', ['redirect_to' => url()->current()]) }}" class="bg-blue-600 text-white px-5 py-2.5 rounded-lg font-bold hover:bg-blue-700 transition duration-300 shadow-sm text-sm">
+                                Login Admin
+                            </a>
+                        @endguest
+
+                        @auth
                             <div class="relative">
                                 <button id="btnAkun" class="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full hover:bg-gray-200 transition">
                                     <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white">
@@ -47,26 +55,256 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
+
                                 <div id="dropdownMenu" class="dropdown-menu absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-100 py-2 z-50">
-                                    <a href="profil-akun.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Profil Saya</a>
-                                    <a href="pengaturan.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">Pengaturan</a>
-                                    <hr class="my-1 border-gray-100">
-                                    <a href="logout.php" class="block px-4 py-2 text-sm text-red-600 font-bold hover:bg-red-50">Keluar (Logout)</a>
+                                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600">
+                                        Pengaturan Profil
+                                    </a>
+                                    <div class="border-t border-gray-100 my-1">
+                                        <form method="POST" action="{{ route('logout', ['redirect_to' => url()->current()]) }}">
+                                            @csrf
+                                            <button type="submit" class="block px-4 py-2 text-sm text-red-600 font-bold hover:bg-red-50">
+                                                Keluar (Logout)
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        <?php else: ?>
-                            <a href="login" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-bold transition text-sm shadow-sm flex items-center space-x-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-                                </svg>
-                                <span>Login Admin</span>
-                            </a>
-                        <?php endif; ?>
+                        @endauth
+
                     </div>
                 </div>
             </div>
         </div>
     </nav>
+
+    <main class="flex-grow container mx-auto px-4 py-12 max-w-7xl">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-gray-800 uppercase tracking-wider">Infografis Desa Sirnagalih</h1>
+            <div class="h-1 w-24 bg-blue-600 mx-auto mt-3 rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 col-span-1 lg:col-span-2">
+                <h3 class="text-2xl font-bold text-gray-800 text-center mb-1 tracking-wide">Statistik Umur</h3>
+                <div class="relative w-full h-[450px]">
+                    <canvas id="umurChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-1 tracking-wide">Statistik Agama</h3>
+                <div class="relative w-full h-96 flex justify-center">
+                    <canvas id="agamaChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                <h3 class="text-2xl font-bold text-gray-800 mb-1 tracking-wide">Pendidikan Penduduk</h3>
+                <div class="relative w-full h-96">
+                    <canvas id="pendidikanChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center">
+                <h3 class="text-2xl font-bold text-gray-800 mb-1 tracking-wide">Kritea Penduduk</h3>
+                <p class="text-sm text-gray-400 mb-10">Mampu dan Tidak Mampu</p>
+                <div class="relative w-full h-96">
+                    <canvas id="kriteaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Set Warna Standar dan Font untuk Semua Chart
+        Chart.defaults.font.family = "'Times New Roman', Times, serif";
+        Chart.defaults.font.size = 13;
+        Chart.defaults.color = "#6b7280"; // text-gray-500
+        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(17, 24, 39, 0.9)'; // gray-900
+        Chart.defaults.plugins.tooltip.titleColor = '#fff';
+        Chart.defaults.plugins.tooltip.bodyColor = '#f3f4f6'; // gray-100
+        Chart.defaults.plugins.tooltip.cornerRadius = 6;
+
+        // --- 1. Skrip untuk Statistik Umur (Line Chart) ---
+        const ctxUmur = document.getElementById('umurChart').getContext('2d');
+        const gradientUmur = ctxUmur.createLinearGradient(0, 0, 0, 450);
+        gradientUmur.addColorStop(0, 'rgba(37, 99, 235, 0.1)'); // blue-600 light
+        gradientUmur.addColorStop(1, 'rgba(255, 255, 255, 0)'); // white full
+
+        new Chart(ctxUmur, {
+            type: 'line',
+            data: {
+                labels: ['0 s/d 10 Thn', '10 s/d 20 Thn', '20 s/d 30 Thn', '30 s/d 40 Thn', '40 s/d 50 Thn', '50 s/d 65 Thn', '65+ Thn', 'Belum Terdata'],
+                datasets: [{
+                    label: 'Jumlah Penduduk',
+                    data: [781, 2148, 2444, 2071, 2092, 2243, 744, 6], // Data angka dari gambar Anda
+                    fill: true,
+                    backgroundColor: gradientUmur,
+                    borderColor: '#079aa2', // blue-600
+                    borderWidth: 3,
+                    pointBackgroundColor: '#079aa2',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#f3f4f6', // gray-100
+                        },
+                        ticks: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- 2. Skrip untuk Statistik Agama (Doughnut Chart) ---
+        new Chart(document.getElementById('agamaChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Islam', 'Kristen', 'Katholik', 'Buddha', 'Lainnya'],
+                datasets: [{
+                    data: [12388, 70, 62, 7, 2], // Data persentase dari gambar Anda
+                    backgroundColor: [
+                        '#079aa2',
+                        '#26a7ae',
+                        '#45b3b9',
+                        '#45b3b9',
+                        '#83cdd1',
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 4,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 25,
+                            usePointStyle: true,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- 3. Skrip untuk Pendidikan Penduduk (Horizontal Bar Chart) ---
+        new Chart(document.getElementById('pendidikanChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Tamat SD/Sederajat', 'SLTA/SMA/Sederajat', 'SLTP/SMP/Sederajat', 'Tidak/Belum Sekolah', 'Belum Tamat SD/Sederajat', 'Diploma IV/Strata I/II', 'Akademi/D3/Sarjana Muda', 'Diploma I/II', 'Lainnya', 'Strata III'],
+                datasets: [{
+                    label: 'Jumlah Penduduk',
+                    data: [3220, 3140, 2176, 1825, 1366, 593, 152, 43, 8, 3], // Data angka dari gambar Anda
+                    backgroundColor: 'rgba(122, 214, 255, 0.8)', // blue-600
+                    borderColor: '#7ad6ff', // blue-600
+                    borderWidth: 1,
+                    borderRadius: 6,
+                    barThickness: 25
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Membuat bar menjadi horizontal
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#f3f4f6', // gray-100
+                        },
+                        ticks: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('kriteaChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Tidak Mampu', 'Mampu'],
+                datasets: [{
+                    data: [11361, 1168], // Data persentase dari gambar Anda
+                    backgroundColor: [
+                        '#56cc58',
+                        '#a6edc5',
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 4,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 25,
+                            usePointStyle: true,
+                            font: {
+                                size: 14
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
     <footer id="footer" class="bg-gray-900 text-white py-12">
         <div class="footer-top">
