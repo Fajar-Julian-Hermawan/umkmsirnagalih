@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <title>Infografis | UMKM Desa Sirnagalih</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -29,7 +30,7 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="/" class="text-gray-600 hover:text-blue-600 transition font-medium">Beranda</a>
                     <a href="profil-desa" class="text-gray-600 hover:text-blue-600 transition font-medium">Profil Desa</a>
-                    <a href="infografis" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">Infografis</a>
+                    <a href="#" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">Infografis</a>
                     <a href="listing" class="text-gray-600 hover:text-blue-600 transition font-medium">Listing</a>
                     <a href="berita" class="text-gray-600 hover:text-blue-600 transition font-medium">Berita</a>
                     <a href="data-umkm" class="text-gray-600 hover:text-blue-600 transition font-medium">Data UMKM</a>
