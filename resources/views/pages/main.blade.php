@@ -31,7 +31,6 @@
                     <a href="profil-desa" class="text-gray-600 hover:text-blue-600 transition font-medium">Profil Desa</a>
                     <a href="infografis" class="text-gray-600 hover:text-blue-600 transition font-medium">Infografis</a>
                     <a href="listing" class="text-gray-600 hover:text-blue-600 transition font-medium">Listing</a>
-                    <a href="berita" class="text-gray-600 hover:text-blue-600 transition font-medium">Berita</a>
                     <a href="data-umkm" class="text-gray-600 hover:text-blue-600 transition font-medium">Data UMKM</a>
 
                     <div class="hidden md:flex items-center space-x-4">
@@ -142,23 +141,6 @@
                 </div>
                 <div class="text-yellow-600 text-xs font-bold mt-6 inline-flex items-center group-hover:translate-x-2 transition-transform">
                     <span>Eksplorasi Peta</span>
-                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                </div>
-            </a>
-
-            <a href="berita" class="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 transform hover:-translate-y-1 flex flex-col justify-between">
-                <div>
-                    <div class="w-14 h-14 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mb-5 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h10M7 16h5"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2 tracking-wide group-hover:text-red-600 transition-colors">Berita Desa</h3>
-                    <p class="text-sm text-gray-600 leading-relaxed">Kumpulan informasi aktual, agenda kegiatan sosial kemasyarakatan, rilis berita resmi, serta pengumuman penting bagi warga desa.</p>
-                </div>
-                <div class="text-red-600 text-xs font-bold mt-6 inline-flex items-center group-hover:translate-x-2 transition-transform">
-                    <span>Baca Berita</span>
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </div>
             </a>

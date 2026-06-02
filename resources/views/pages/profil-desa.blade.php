@@ -32,7 +32,6 @@
                     <a href="#" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">Profil Desa</a>
                     <a href="infografis" class="text-gray-600 hover:text-blue-600 transition font-medium">Infografis</a>
                     <a href="listing" class="text-gray-600 hover:text-blue-600 transition font-medium">Listing</a>
-                    <a href="berita" class="text-gray-600 hover:text-blue-600 transition font-medium">Berita</a>
                     <a href="data-umkm" class="text-gray-600 hover:text-blue-600 transition font-medium">Data UMKM</a>
                     
                     <div class="hidden md:flex items-center space-x-4">
